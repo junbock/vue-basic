@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>step05_application.html</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h3>미션 1</h3>
+    <div id="app1">
+        숫자 입력 : <input type="number" v-model="number"> <br>
+        {{won}}
+    </div>
+    
+    <script>
+        let app1 = new Vue({
+            el: "#app1",
+            data: {
+                number: 0,
+                won: ""
+            },
+            watch: {
+                number: function (v) {
+                    this.won = v.charAt(0);
+                    for (let i = 1; i < v.length; i++) {
+                        if ((v.length - i) % 3 == 0 && this.won != "-") {
+                            this.won += ",";
+                        }
+                        this.won += v.charAt(i);
+                    }
+                    this.won += "원";
+                }
+            }
+        });
+    </script>
+
+    <br><hr>
+
+    <h3>미션 2</h3>
+    <div id="app2">
+        이름 나이 : <input type="text" v-model="input">
+        <button v-on:click="div">입력</button> <br>
+        이름: {{name}} 나이: {{age}}<br>
+    </div>
+
+    <script>
+        let app2 = new Vue({
+            el: "#app2",
+            data: {
+                input: "",
+                name: "",
+                age: 0
+            },
+            methods: {
+                div: function () {
+                    let splitInput = this.input.split(" ");
+                    this.name = splitInput[0];
+
+                    if (splitInput.length > 1) {
+                        this.age = Number(splitInput[1]) == NaN ? Number(splitInput[1]) : 0;
+                    } else {
+                        this.age = 0;
+                    }
+                }
+            }
+        });
+
+    </script>
+
+    <br><hr>
+
+    <h3>미션 3</h3>
+    <div id="app3">
+        1.<input type="radio" name="smile" value=0 v-model.number="radio">
+        2.<input type="radio" name="smile" value=1 v-model.number="radio">
+        3.<input type="radio" name="smile" value=2 v-model.number="radio">
+        &nbsp<button v-on:click="goAway">help</button> <br>
+        <img id="img" height="400">
+    </div>
+
+    <script>
+        let app3 = new Vue({
+            el: "#app3",
+            data: {
+                radio: -1,
+                link: ["smile/smile1.gif", "smile/smile2.gif", "smile/smile3.gif"]
+            },
+            methods: {
+                goAway: function () {
+                    this.radio = -1;
+                }
+            },
+            watch: {
+                radio: function (v) {
+                    if (v >= 0) {
+                        document.getElementById("img").src = this.link[v];
+                    } else {
+                        document.getElementById("img").src = ""
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
